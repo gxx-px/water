@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../static/css/base.css" rel="stylesheet">
+    <link href="http://jyywiki.cn/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.font.im/css?family=Source+Serif+Pro%7CLato%7CInconsolata" rel="stylesheet"
+          type="text/css">
+    <title>CSAPP 讨论会</title>
+    <!--    browser favicon-->
+    <link rel="shortcut icon" href="https://cdn-0x4f.do3ob.cn/assets/favicon-gggj2dbz.png">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="../static/katex/katex.min.css">
+    <script defer src="../static/katex/katex.min.js"></script>
+<!--    <script defer src="../static/katex/auto-render.min.js"-->
+<!--            integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"-->
+<!--            crossorigin="anonymous"></script>-->
+    <script defer src="../static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="../static/reveal/reveal.css">
+    <link rel="stylesheet" href="../static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">CSAPP 讨论会</h1>
+<p class=" font-serif my-1">Week 1 信息的表示和处理  </p>
+<p class=" font-serif my-1">2022/10/29</p>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">信息编码</h2>
+<p class=" font-serif my-1">以何种角度来看待这一串 01 序列</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">symbol_interpret.c</li>
+<li class=" ml-8">数据<ul class=" list-disc font-serif">
+<li class=" ml-8">整数</li>
+<li class=" ml-8">浮点数 </li>
+<li class=" ml-8"><a href="https://www.bilibili.com/video/BV1NF411i7Zh/">自定义解释数据</a></li>
+</ul>
+</li>
+<li class=" ml-8">代码<ul class=" list-disc font-serif">
+<li class=" ml-8">attack lab</li>
+<li class=" ml-8">eval 函数</li>
+</ul>
+</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">信息编码</h2>
+<blockquote>
+<p class=" font-serif my-1">什么是 CPU ?</p>
+</blockquote>
+<p class=" font-serif my-1">尝试这一串 01 进行译码，并根据翻译的信息执行相关操作的机器。从某种意义上讲，CPU 就是一个大号的解释器</p>
+<p class=" font-serif my-1">字节序</p>
+<p class=" font-serif my-1">当使用<red>多字节数据</red>时，以何种方式来解释这些<red>字节序列(byte order)</red><br/>
+不过现在基本没有大端机器，基本只有网络中才需要考虑这个。</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.11">Java big endian (</a><ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://juejin.cn/post/6844903591963000846">读取二进制文件问题</a></li>
+</ul>
+</li>
+<li class=" ml-8">js?   python: int.from_bytes(bytes, byteorder, *, signed=False)</li>
+<li class=" ml-8">utf-8 ：解析是根据一个字节一个字节解析的，所以无</li>
+<li class=" ml-8">utf-16 ：解析是根据两个字节解析的，所以有</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">整数表示</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">基于权重的整数表示</li>
+<li class=" ml-8">无符号编码</li>
+<li class=" ml-8">有符号编码<ul class=" list-disc font-serif">
+<li class=" ml-8">补码</li>
+<li class=" ml-8">最高位解释成负权重</li>
+</ul>
+</li>
+<li class=" ml-8">字节序<ul class=" list-disc font-serif">
+<li class=" ml-8">cast 、union 问题</li>
+<li class=" ml-8">网络编程</li>
+</ul>
+</li>
+<li class=" ml-8">P.40  getpeername 的安全漏洞<ul class=" list-disc font-serif">
+<li class=" ml-8">arr[-1]</li>
+</ul>
+</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">整数运算</h1>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">整数运算</h2>
+<p class=" font-serif my-1">整数加法</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">A+B = (A+B）mod （2**n）</li>
+</ul>
+<p class=" font-serif my-1">整数乘法</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">A*B = （A*B）mod （2**n）</li>
+</ul>
+<p class=" font-serif my-1">等价性</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">equivalence.c</li>
+<li class=" ml-8">无符号 有符号 的加法和乘法最终结果拥有位级等价性</li>
+<li class=" ml-8">共用加法器和乘法器, 但是符号位要单独算</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">整数运算</h2>
+<p class=" font-serif my-1">溢出问题  </p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">overflow.c</li>
+<li class=" ml-8">无符号溢出</li>
+<li class=" ml-8">有符号溢出</li>
+</ul>
+<pre class="codehilite  bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><code class="language-c">for(size_t i = n; i &gt;= 0; i++) {
+  // it will be infinite loop
+}
+
+// sizeof(expr) will return a value of type size_t
+// the result type of operations on unsigned and signed numbers
+// will be unsigned
+for(int i = n; i-sizeof(char) &gt;= 0; i--) {
+  // it will be infinite loop
+}
+</code></pre>
+
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">不同整数长度转换原则</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">conversion.c</li>
+<li class=" ml-8">相同长度无符号有符号转换原则<ul class=" list-disc font-serif">
+<li class=" ml-8">数值可能会改变，但是位模式不变</li>
+</ul>
+</li>
+<li class=" ml-8">扩展一个数字的位表示<ul class=" list-disc font-serif">
+<li class=" ml-8">符号位扩展</li>
+</ul>
+</li>
+<li class=" ml-8">截断<ul class=" list-disc font-serif">
+<li class=" ml-8">位模式不变，最高位根据补码解释成符号位</li>
+</ul>
+</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">整数习题</h2>
+<p class=" font-serif my-1"><img alt="image-20221015234424275" src=".\assets\image-20221015234424275.png"/></p>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">浮点数</h2>
+<blockquote>
+<p class=" font-serif my-1"><a href="https://www.bilibili.com/video/BV1iW411d7hd?p=4&amp;spm_id_from=pageDriver&amp;vd_source=23f4f9b0133a340ee6349d11dce79c5b&amp;t=880.3">引入 bias ，是为了直接将浮点数的位当做无符号整数直接进行比较，而没必要进行转换</a></p>
+</blockquote>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">cmp_float.c</li>
+<li class=" ml-8"><a href="https://tooltt.com/floatconverter/">二进制版本科学计数法</a><ul class=" list-disc font-serif">
+<li class=" ml-8">IEEE 754</li>
+</ul>
+</li>
+<li class=" ml-8">不满足结合律：大数吃小数 <ul class=" list-disc font-serif">
+<li class=" ml-8">overflow.c</li>
+</ul>
+</li>
+<li class=" ml-8">浮点数比较  abs(a - b) &lt; 0.0001</li>
+<li class=" ml-8">数值分析</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">浮点数</h2>
+<p class=" font-serif my-1"><img alt="image-20221029164539082" src=".\assets\image-20221029164539082.png"/></p>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">浮点数习题</h2>
+<p class=" font-serif my-1"><img alt="image-20221015234346416" src=".\assets\image-20221015234346416.png"/></p>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">语言运算操作</h2>
+<p class=" font-serif my-1">位级操作</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">与运算： 二进制截断  1111 1001 &amp; 1111 0000 = 1111 0000</li>
+<li class=" ml-8">或运算： 二进制组合  1111 0000  |  0000 1111 = 1111 1111</li>
+<li class=" ml-8">异或运算：无进位加法 1111 0000  ^ 0001 1100 = 1110 1100</li>
+<li class=" ml-8"><a href="http://graphics.stanford.edu/~seander/bithacks.html">位运算的奇淫技巧</a></li>
+<li class=" ml-8"><a href="https://fengmuzi2003.gitbook.io/csapp3e/di-er-zhang-zhong-dian-jie-du">其他方面</a></li>
+</ul>
+<p class=" font-serif my-1">移位操作 </p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">shift.c</li>
+<li class=" ml-8">C 对于有符号数右移是 UB，大多数编译器实现为算术右移</li>
+<li class=" ml-8">逻辑右移</li>
+<li class=" ml-8">算术右移</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">语言运算操作</h2>
+<p class=" font-serif my-1">短路求值 </p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">short_circuit_evaluation.c</li>
+<li class=" ml-8"><code>gcc short_circuit_evaluation.c &amp;&amp; ./a.out</code>  不会报错</li>
+<li class=" ml-8">空指针访问： <code>p &amp;&amp; *p</code></li>
+<li class=" ml-8">类中函数访问  <code>A.fun &amp;&amp; A.fun()</code></li>
+</ul>
+<p class=" font-serif my-1">其他软件</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://valgrind.org/docs/manual/manual.html">valgrind</a></li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">其他语言实现</h2>
+<pre class="codehilite  bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><code>// 9007万亿
+a = 2**53 + 3
+
+a = 2147483648
+-a = (~a+1)
+</code></pre>
+
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Bitwise_NOT">js</a><ul class=" list-disc font-serif">
+<li class=" ml-8">number 类型实现</li>
+</ul>
+</li>
+<li class=" ml-8">python</li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">相关链接</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://0xffff.one/d/684-cmucsapp-2015-cmu-15213-csapp-zi/13">论坛内帖子</a></li>
+<li class=" ml-8"><a href="https://www.bilibili.com/video/BV1RK4y1R7Kf/?spm_id_from=333.337.search-card.all.click">csapp 重点导读</a><ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://fengmuzi2003.gitbook.io/csapp3e/">相关帖子</a></li>
+</ul>
+</li>
+<li class=" ml-8"><a href="https://space.bilibili.com/4564101/video">B站硬核讲解</a></li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">字符怎么显示出来？</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://www.quora.com/How-does-a-computer-display-characters">quora的回答</a></li>
+<li class=" ml-8"><a href="https://www.bilibili.com/video/BV1YS4y1Z7Ed/">点阵字体打印实现</a></li>
+</ul>
+</div> 
+</section>
+    </div>
+</div>
+<script src="../static/reveal/reveal.js"></script>
+<script>
+    Reveal.initialize({
+
+        width: 1024, height: 768,
+
+        slideNumber: 'c/t',
+        controlsTutorial: false,
+        progress: false,
+        hash: true,
+        center: false,
+        autoAnimateUnmatched: true,
+        autoAnimateEasing: 'ease-out',
+        autoAnimateDuration: 0.3,
+        transitionSpeed: 'fast'
+    });
+</script>
+</body>
+</html>

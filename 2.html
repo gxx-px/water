@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../static/css/base.css" rel="stylesheet">
+    <link href="http://jyywiki.cn/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.font.im/css?family=Source+Serif+Pro%7CLato%7CInconsolata" rel="stylesheet"
+          type="text/css">
+    <title>CSAPP 讨论会</title>
+    <!--    browser favicon-->
+    <link rel="shortcut icon" href="https://cdn-0x4f.do3ob.cn/assets/favicon-gggj2dbz.png">
+    <style>
+        .font-sans {
+            font-family: 'Lato', 'SimHei', 'STHeiti', 'SimHei', 'Serif';
+        }
+
+        .font-serif {
+            font-family: 'Source Serif Pro', 'Songti SC', 'SimSun', 'Serif', serif;
+        }
+    </style>
+    <link rel="stylesheet" href="../static/katex/katex.min.css">
+    <script defer src="../static/katex/katex.min.js"></script>
+<!--    <script defer src="../static/katex/auto-render.min.js"-->
+<!--            integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"-->
+<!--            crossorigin="anonymous"></script>-->
+    <script defer src="../static/katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // &#8226; auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // &#8226; rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+
+
+    <link rel="stylesheet" href="../static/reveal/reveal.css">
+    <link rel="stylesheet" href="../static/reveal/theme/simple.css" id="theme">
+
+    <style>
+        .reveal .slide-number {
+            font-size: 26px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .reveal .slides {
+            border: 1.5px #ddd solid;
+            border-radius: 7px;
+            text-align: left;
+            font-weight: 300;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4 {
+            font-family: 'Lato', 'SimHei', 'STXihei', 'Sans Serif';
+            font-weight: 400;
+        }
+
+        .reveal p,
+        .reveal li,
+        .reveal center {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+        }
+
+        .reveal li+li {
+            margin-top: 10px;
+        }
+
+        .reveal ul {
+            display: block;
+            margin-right: 15px;
+        }
+
+        .reveal p,
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5 {
+            padding: 0 25px 0 25px;
+        }
+
+        .reveal table {
+            font-size: 32px;
+            font-family: 'Lato', 'STHeiti', 'SimHei', 'Sans Serif';
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .reveal th {
+            background-color: #eee;
+        }
+
+        .reveal tr:nth-child(even) {
+            background-color: #efffff;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-align: left;
+            margin: 0 0 20px 0;
+            color: #222;
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: normal;
+        }
+
+
+
+        .reveal h1 {
+            margin: 0 10 0 10;
+            font-size: 60px;
+        }
+
+        .reveal .middle h1 {
+            text-align: center;
+        }
+
+        .reveal h2 {
+            font-size: 48px;
+            border-bottom: 2px solid rgb(106, 0, 95);
+            padding-bottom: 5px;
+        }
+
+        .reveal h3 {
+            font-size: 1.15em;
+        }
+
+        .reveal h4 {
+            font-size: 1.05em;
+        }
+
+        .reveal .center {
+            text-align: center;
+        }
+
+        .reveal .middle {
+            height: 728px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .reveal pre {
+            font-size: 28px;
+
+            background-color: #eee;
+
+            border-radius: 3mm;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .reveal pre code {
+            max-height: none;
+        }
+
+        .reveal code {
+            font-family: 'Inconsolata', 'STKaiti', 'KaiTi', 'Sans Serif', Monospace;
+        }
+
+        .reveal .middle blockquote {
+            text-align: center;
+            color: rgb(106, 0, 95);
+            background: none;
+            box-shadow: none;
+        }
+
+        .reveal .middle blockquote a {
+            color: inherit;
+        }
+
+        .reveal blockquote p,
+        .reveal blockquote li {
+            font-family: 'Lato', 'STKaiti', 'KaiTi', 'Sans Serif';
+        }
+
+        section .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reveal .author-block {
+            margin: 75px 0 35px 0;
+        }
+
+        .reveal .author-affiliation img {
+            margin: 15px 0 0 0;
+        }
+
+        .reveal .author-block p,
+        .reveal .author-affiliation p {
+            font-family: 'Kaiti', 'STKaiti', 'Serif', 'Times', 'Times New Roman';
+            margin-block-start: 0em;
+            margin-block-end: 0em;
+        }
+
+        .reveal .author-affiliation {
+            display: inline-block;
+            font-size: 90%;
+        }
+
+        .reveal hr {
+            border: 10px solid rgba(0, 0, 0, 0);
+        }
+
+        .reveal li {
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+
+
+<div class="reveal">
+    <div class="slides">
+        <section>
+ <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">CSAPP 讨论会</h1>
+<p class=" font-serif my-1">Week 2 程序的机器级表示<br/>
+2022/11/12</p>
+</div> 
+</div> 
+</div> 
+</section>
+
+<section>
+ 
+<section> <div class="center middle"><div style="width:100%"><div>
+<h1 class=" text-2xl mt-2 font-sans">回到过去</h1>
+</div> </div> </div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">最简单的计算机</h2>
+<p class=" font-serif my-1"><img alt="" class="float-right" src="https://upload.wikimedia.org/wikipedia/commons/d/de/Fetch-Decode-Execute_Cycle.png" width="200px"/></p>
+<p class=" font-serif my-1">CPU 就是一个无情的指令执行机器</p>
+<ol>
+<li class=" ml-8">从PC指示的存储器位置取出指令;</li>
+<li class=" ml-8">执行指令;</li>
+<li class=" ml-8">更新PC;</li>
+<li class=" ml-8">回到 1, 以此往复无限循环</li>
+</ol>
+<p class=" font-serif my-1">如果由我们自己设计指令集<br/>
+我们希望机器提供给我们什么样的 Interface ?</p>
+<p class=" font-serif my-1">机器有如下约定</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">所有数据和指令都只有<red>一个字节</red></li>
+<li class=" ml-8">所有的计算操作只能在寄存器内部进行</li>
+</ul>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">机器级别 Interface</h2>
+<blockquote>
+<p class=" font-serif my-1"><a href="https://www.cs.unibo.it/~martini/PP/bohm-jac.pdf">所有的程序都可以由顺序、分支、循环三种控制结构组成</a></p>
+</blockquote>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">设置寄存器数值指令</li>
+<li class=" ml-8">计算指令 <ul class=" list-disc font-serif">
+<li class=" ml-8">加、减、乘、除等指令</li>
+</ul>
+</li>
+<li class=" ml-8">程序控制流指令<ul class=" list-disc font-serif">
+<li class=" ml-8">顺序</li>
+<li class=" ml-8">分支</li>
+<li class=" ml-8">循环</li>
+</ul>
+</li>
+<li class=" ml-8">停机指令</li>
+</ul>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">指令集</h2>
+<p class=" font-serif my-1">寄存器</p>
+<table>
+<thead>
+<tr>
+<th>register</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x0</td>
+<td>特殊寄存器，永远是零</td>
+</tr>
+<tr>
+<td>x1</td>
+<td>通用寄存器</td>
+</tr>
+<tr>
+<td>x2</td>
+<td>通用寄存器</td>
+</tr>
+<tr>
+<td>x3</td>
+<td>通用寄存器</td>
+</tr>
+<tr>
+<td>PC</td>
+<td>用来记录当前要进行的指令, 不能直接访问</td>
+</tr>
+<tr>
+<td>cmp_r</td>
+<td>专门保存 cmp_greater 的结果, 不能直接访问</td>
+</tr>
+</tbody>
+</table>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">指令集</h2>
+<p class=" font-serif my-1">算数指令</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Meaning</th>
+<th style="text-align: center;">ASM</th>
+<th style="text-align: center;">Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Addition with registers</td>
+<td style="text-align: center;">add   x1 x2 x3</td>
+<td style="text-align: center;">x3 = x1 + x2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Addition with immediate , register</td>
+<td style="text-align: center;">addi  -8 x0 x3</td>
+<td style="text-align: center;">x3 = -8 + x0</td>
+</tr>
+</tbody>
+</table>
+<p class=" font-serif my-1">控制指令</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ASM</th>
+<th style="text-align: left;">Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">cmp_greater x1 x2</td>
+<td style="text-align: left;">cmp_r = x1 &gt; x2 ? 1: 0</td>
+</tr>
+<tr>
+<td style="text-align: left;">jump_if_greater lable</td>
+<td style="text-align: left;">if (cmp_r) then PC = label_address</td>
+</tr>
+</tbody>
+</table>
+<p class=" font-serif my-1">停机指令</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">halt</li>
+</ul>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">ASM example</h2>
+<p class=" font-serif my-1">在此基础上，我们希望这些指令能执行起来，虽然造不出来，但我们可以写个解释器执行这些指令</p>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nf">addi</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
+<span class="nf">addi</span><span class="w">  </span><span class="mi">2</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
+<span class="nf">add</span><span class="w">  </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
+<span class="nf">halt</span><span class="w"/>
+</code></pre></div>
+
+</div>
+<div class="fragment" data-fragment-index="0"> <div>
+<p class=" font-serif my-1">但是我们无法观测到指令执行的结果，完全可以添加一条指令用于打印寄存器的值</p>
+</div> </div>
+<div class="fragment" data-fragment-index="1"> <div>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nf">addi</span><span class="w">   </span><span class="mi">2</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
+<span class="nf">addi</span><span class="w">  </span><span class="mi">-1</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
+<span class="nf">add</span><span class="w">   </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
+<span class="nf">print</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
+<span class="nf">halt</span><span class="w"/>
+</code></pre></div>
+
+</div> </div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Branch</h2>
+<p class=" font-serif my-1">现在只能顺序执行，条件跳转和循环如何实现？</p>
+</div>
+<div class="fragment" data-fragment-index="0"> <div>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nf">addi</span><span class="w">   </span><span class="mi">2</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
+<span class="nf">addi</span><span class="w">  </span><span class="mi">-1</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
+<span class="nf">addi</span><span class="w">   </span><span class="mi">0</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
+<span class="nf">cmp_greater</span><span class="w">   </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
+<span class="nf">jump_if_great</span><span class="w"> </span><span class="err">@</span><span class="no">label</span><span class="w"/>
+<span class="nf">add</span><span class="w">   </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
+<span class="err">@</span><span class="nf">label</span><span class="w"/>
+<span class="nf">print</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
+<span class="nf">halt</span><span class="w"/>
+</code></pre></div>
+
+</div> </div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">Loop</h2>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="c1">; 1+2+3...+10</span>
+<span class="c1">; for(int x1 = 1; x1 &lt; 11; x1++) { x3 = x3 + x1 }</span>
+
+<span class="c1">; init</span>
+<span class="nf">addi</span><span class="w">   </span><span class="mi">1</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
+<span class="nf">addi</span><span class="w">  </span><span class="mi">11</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w"/>
+<span class="nf">addi</span><span class="w">   </span><span class="mi">0</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
+
+<span class="err">@</span><span class="nf">loop</span><span class="w"/>
+<span class="c1">; x3 = x1 + x3</span>
+<span class="nf">add</span><span class="w">   </span><span class="no">x1</span><span class="w"> </span><span class="no">x3</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
+<span class="c1">; x1 = x1 + 1</span>
+<span class="nf">addi</span><span class="w">   </span><span class="mi">1</span><span class="w"> </span><span class="no">x1</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
+
+<span class="nf">cmp_greater</span><span class="w">   </span><span class="no">x2</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
+<span class="nf">jump_if_great</span><span class="w"> </span><span class="err">@</span><span class="no">loop</span><span class="w"/>
+<span class="nf">print</span><span class="w"> </span><span class="no">x3</span><span class="w"/>
+<span class="nf">halt</span><span class="w"/>
+</code></pre></div>
+
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">寄存器数量不够用?</h2>
+<p class=" font-serif my-1">新增访存指令</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">ASM</th>
+<th style="text-align: center;">Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">load r1 r2</td>
+<td style="text-align: center;">r2 = mem[r1]</td>
+</tr>
+<tr>
+<td style="text-align: center;">write r1 r2</td>
+<td style="text-align: center;">mem[r2] = reg</td>
+</tr>
+</tbody>
+</table>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">函数调用</h2>
+<p class=" font-serif my-1">要解决以下几个问题</p>
+<ol>
+<li class=" ml-8">如何传递函数的参数</li>
+<li class=" ml-8">如何跳转其他函数</li>
+<li class=" ml-8">函数内部变量如何放置</li>
+<li class=" ml-8">函数的返回值如何传递</li>
+<li class=" ml-8">如何返回原来的函数继续执行</li>
+</ol>
+<p class=" font-serif my-1">2 和 5 这两件事情凭现在的指令是做不了的<br/>
+对于 3 需要其他的空间储存相应的变量<br/>
+1 和 4 则需要人为约定</p>
+<p class=" font-serif my-1">大多数子程序的使用基本满足先进后出的原则</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">子程序中局部变量</li>
+<li class=" ml-8">子程序的返回地址等</li>
+</ul>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">新增对PC的操作指令</h2>
+<p class=" font-serif my-1">call 指令</p>
+<ol>
+<li class=" ml-8">将 call 指令的下一条地址存在某个地方</li>
+<li class=" ml-8">pc 设置为要跳转的函数</li>
+</ol>
+<p class=" font-serif my-1">ret 指令</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">将 pc 设置刚才保存的值</li>
+</ul>
+</div>
+<div class="fragment" data-fragment-index="0"> <div>
+<p class=" font-serif my-1">push 指令</p>
+<ol>
+<li class=" ml-8">addi -1 sp sp</li>
+<li class=" ml-8">write reg adr</li>
+</ol>
+<p class=" font-serif my-1">pop  指令</p>
+<ol>
+<li class=" ml-8">load addr reg</li>
+<li class=" ml-8">addi 1 sp sp</li>
+</ol>
+</div> </div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">新增对PC的操作指令</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">push pc + 1</li>
+<li class=" ml-8">jump @label</li>
+</ul>
+<p class=" font-serif my-1">ret 指令</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">pop pc</li>
+</ul>
+<p class=" font-serif my-1">但是并不是所有的指令集都是这样的行为</p>
+</div> </section>
+
+<section> <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">递归程序</h2>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">                                      </span>
+<span class="w">    </span><span class="c1">// x1 &lt; 2                                      </span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="w">                                       </span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x1</span><span class="w"/>
+<span class="w">    </span><span class="n">x1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">add</span><span class="p">(</span><span class="n">x1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">                                     </span>
+<span class="w">    </span><span class="n">x1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x1</span><span class="w">                                      </span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">x1</span><span class="w">                                       </span>
+<span class="p">}</span><span class="w">                                      </span>
+</code></pre></div>
+
+</div>
+<div class="fragment" data-fragment-index="0"> <div>
+<div class="codehilite"><pre class=" bg-gray-100 overflow-x-auto rounded p-2 mb-2 mt-2"><span/><code><span class="nf">addi</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="no">x0</span><span class="w">                      </span><span class="no">push</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
+<span class="nf">call</span><span class="w"> </span><span class="err">@</span><span class="no">add</span><span class="w">                       </span><span class="no">addi</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="no">x1</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
+<span class="nf">print</span><span class="w"> </span><span class="no">x1</span><span class="w">                        </span><span class="no">call</span><span class="w"> </span><span class="err">@</span><span class="no">add</span><span class="w"/>
+<span class="nf">halt</span><span class="w">                            </span><span class="no">pop</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span>
+<span class="w">                                </span><span class="no">add</span><span class="w"> </span><span class="no">x1</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x1</span><span class="w"/>
+<span class="err">@</span><span class="nf">add</span><span class="w">                            </span>
+<span class="no">addi</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="no">x0</span><span class="w"> </span><span class="no">x2</span><span class="w">                    </span><span class="err">@</span><span class="no">return</span><span class="w"> </span>
+<span class="no">cmp_greater</span><span class="w"> </span><span class="no">x2</span><span class="w"> </span><span class="no">x1</span><span class="w">               </span><span class="no">ret</span><span class="w"> </span>
+<span class="no">jump_if_greater</span><span class="w"> </span><span class="err">@</span><span class="no">return</span><span class="w">   </span>
+</code></pre></div>
+
+</div> </div> </section>
+
+<section> <div>
+<p class=" font-serif my-1">这种传参的人为约定有一套标准称为 <a href="https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf">ABI</a> </p>
+<p class=" font-serif my-1">现在还缺了点什么呢？</p>
+<ul class=" list-disc font-serif">
+<li class=" ml-8">多字节数据的支持</li>
+<li class=" ml-8">其他的分支指令(equal .etc)</li>
+<li class=" ml-8">相对地址的跳转<ul class=" list-disc font-serif">
+<li class=" ml-8">此外，还有一个问题, jump 是基于绝对地址。这对后来的动态加载会有问题，我们需要一个基于 PC 的相对跳转</li>
+</ul>
+</li>
+<li class=" ml-8">对于全局变量是手动管理，需要清楚内存的布局</li>
+</ul>
+</div> </section> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">过去的处理器</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://www.nesdev.org/obelisk-6502-guide/reference.html">6502 手册</a></li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">现在处理器</h2>
+<ul class=" list-disc font-serif">
+<li class=" ml-8"><a href="https://www.intel.cn/content/www/cn/zh/architecture-and-technology/64-ia-32-architectures-software-developer-vol-1-manual.html">x86</a></li>
+<li class=" ml-8"><a href="https://github.com/riscv/riscv-isa-manual">risc-v</a></li>
+</ul>
+</div> 
+</section>
+
+<section>
+ <div>
+<h2 class=" text-xl mt-2 pb-2 font-sans">其他方面</h2>
+<p class=" font-serif my-1"><a href="https://www.bilibili.com/video/BV1p34y1a7FH/">读懂变量名</a></p>
+<p class=" font-serif my-1">https://en.wikipedia.org/wiki/Skylake_(microarchitecture)</p>
+<p class=" font-serif my-1">https://pythontutor.com/</p>
+</div> 
+</section>
+    </div>
+</div>
+<script src="../static/reveal/reveal.js"></script>
+<script>
+    Reveal.initialize({
+
+        width: 1024, height: 768,
+
+        slideNumber: 'c/t',
+        controlsTutorial: false,
+        progress: false,
+        hash: true,
+        center: false,
+        autoAnimateUnmatched: true,
+        autoAnimateEasing: 'ease-out',
+        autoAnimateDuration: 0.3,
+        transitionSpeed: 'fast'
+    });
+</script>
+</body>
+</html>
